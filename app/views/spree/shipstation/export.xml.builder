@@ -61,17 +61,6 @@ xml.Orders {
             xml.WeightUnits Spree::Config.shipstation_weight_units
             xml.Quantity    line.quantity
             xml.UnitPrice   line.price
-
-            if variant.option_values.present?
-              xml.Options {
-                variant.option_values.each do |value|
-                  xml.Option {
-                    xml.Name  value.option_type.presentation
-                    xml.Value value.name
-                  }
-                end
-              }
-            end
           }
         end
       }
