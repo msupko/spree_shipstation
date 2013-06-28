@@ -56,7 +56,7 @@ xml.Orders {
           xml.Item {
             xml.SKU         variant.sku
             xml.Name        [variant.product.name, variant.options_text].join(' ')
-            xml.ImageUrl    'http://' + Spree::Config.site_url + variant.images.first.try(:attachment).try(:url)
+            xml.ImageUrl    'http://' + Spree::Config.site_url + variant.images.first.try(:attachment).try(:url).to_s
             xml.Weight      variant.weight.to_f
             xml.WeightUnits Spree::Config.shipstation_weight_units
             xml.Quantity    line.quantity
