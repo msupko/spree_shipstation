@@ -22,7 +22,7 @@ def address(xml, order, type)
 end
 
 xml.instruct!
-xml.Orders {
+xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
   @shipments.each do |shipment|
     order = shipment.order
 
@@ -31,7 +31,7 @@ xml.Orders {
       xml.OrderNumber    Spree::Config.shipstation_number == :order ? order.number : shipment.number
       xml.OrderDate      order.completed_at.strftime(date_format)
       xml.OrderStatus    shipment.state
-      xml.LastModified   shipment.updated_at.strftime(date_format)
+      xml.LastModified   [order.completed_at, shipment.updated_at].max.strftime(date_format)
       xml.ShippingMethod shipment.shipping_method.try(:name)
       xml.OrderTotal     order.total
       xml.TaxAmount      order.tax_total
